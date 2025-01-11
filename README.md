@@ -1,4 +1,4 @@
-# TDD Kata
+# TDD Kata Setup
 
 This guide will help you set up and clean up the TDD Kata environment using the provided Makefile.
 

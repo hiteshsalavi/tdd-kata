@@ -15,4 +15,20 @@ RSpec.describe "def add with" do
             end
         end
     end
+
+    context "invalid arguments" do
+        [
+          { input: 1234, expected: { error: TypeError, message: /arg should be string/ } },
+          { input: 123.4, expected: { error: TypeError, message: /arg should be string/ } },
+          { input: true, expected: { error: TypeError, message: /arg should be string/ } },
+          { input: nil, expected: { error: TypeError, message: /arg should be string/ } },
+          { input: [1,2], expected: { error: TypeError, message: /arg should be string/ } },
+          { input: ['1,2'], expected: { error: TypeError, message: /arg should be string/ } },
+          { input: '1,hi', expected: { error: ArgumentError, message: /arg should be "," separated numbers/ } },
+        ].each do |example|
+          it "raises #{example[:expected][:error]} for input #{example[:input]}" do
+            expect { add(example[:input]) }.to raise_error(example[:expected][:error], example[:expected][:message])
+          end
+        end
+    end
 end
