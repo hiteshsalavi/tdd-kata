@@ -15,7 +15,11 @@ def add(input)
     delimiter, numbers = input_validation.captures if input_validation
     raise ArgumentError, "all or a few numbers are not separated by delimiter => #{delimiter}" unless _validate_numbers?(numbers, delimiter)
 
-    numbers.split(/#{Regexp.escape(delimiter)}/).map(&:to_i).sum
+    negatives, positives = numbers.split(/#{Regexp.escape(delimiter)}/).map(&:to_i).partition { |num| num < 0 }
+
+    raise ArgumentError, "negative numbers not allowed #{negatives.join(', ')}" unless negatives.empty?
+
+    positives.sum
 end
 
 def _validate(input)
