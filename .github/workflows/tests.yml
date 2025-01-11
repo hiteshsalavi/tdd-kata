@@ -1,0 +1,22 @@
+# Tests setup for ruby project
+
+name: Tests setup for ruby project
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build docker image
+        run: make build
+
+      - name: Run image
+        run: make up
+
+      - name: Run tests
+        run: make t
+
+      - name: Run cleanup
+        run: make down

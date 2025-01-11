@@ -4,6 +4,15 @@ FROM ruby:3.3.6-alpine
 
 WORKDIR /tdd-kata/main
 
+ENV BUNDLE_APP_CONFIG=/tdd-kata/.bundle
+
+COPY ./Gemfile* ./
+
+# Install bundler
+RUN gem install bundler
+
+RUN bundle install
+
 COPY ./ ./
 
 # main.rb is a never ending process.
