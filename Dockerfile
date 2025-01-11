@@ -6,12 +6,14 @@ WORKDIR /tdd-kata/main
 
 ENV BUNDLE_APP_CONFIG=/tdd-kata/.bundle
 
+ARG BUNDLE_I_FLAGS="--without development:test"
+
 COPY ./Gemfile* ./
 
 # Install bundler
 RUN gem install bundler
 
-RUN bundle install
+RUN bundle install $BUNDLE_I_FLAGS
 
 COPY ./ ./
 

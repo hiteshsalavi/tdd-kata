@@ -9,7 +9,7 @@ root_exec = docker exec -i $(container)
 bundle_exec = $(root_exec) bundle exec
 
 build:
-	DOCKER_BUILDKIT=1 docker buildx build -t $(image):$(tag) .
+	DOCKER_BUILDKIT=1 docker buildx build --build-arg BUNDLE_I_FLAGS="" -t $(image):$(tag) .
 
 up: _require_image
 	docker run -d --name $(container) --volume $(pwd):$(workdir) --rm $(image):$(tag)
