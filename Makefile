@@ -20,7 +20,7 @@ down:
 
 path ?= spec
 t: _require-container-up
-	$(bundle_exec) rspec $(path)
+	@$(bundle_exec) rspec $(path)
 
 
 # --------

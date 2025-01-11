@@ -6,11 +6,10 @@ RSpec.describe "def add with" do
     context "valid argument" do
         [
             {input: '', expected: 0},
-            {input: '1,2', expected: 3},
-            {input: '1,2,3', expected: 6},
-            {input: '1,2,3,-2', expected: 4},
-            {input: "1\n2,3", expected: 6},
-            {input: "1,2\n3", expected: 6},
+            {input: "//,\n1,2", expected: 3},
+            {input: "//,\n1,2,3", expected: 6},
+            {input: "//#,\n1#,2#,3", expected: 6},
+            {input: "//#,\n1#,2#,3#,-2", expected: 4},
         ].each do |example|
             it "#{example[:input]} returns #{example[:expected]}" do
                 expect(add(example[:input])).to eq(example[:expected])
@@ -21,7 +20,8 @@ RSpec.describe "def add with" do
     describe "invalid argument" do
       context "by value" do
         [
-          { input: '1,hi', expected: { error: ArgumentError, message: /arg should be ', \n' separated numbers/ } },
+          { input: '1,hi', expected: { error: ArgumentError, message: 'arg should be delimiter separated numbers. eg. //;\n1;2;3' } },
+          { input: "//,\n1,2#3", expected: { error: ArgumentError, message: 'all or a few numbers are not separated by delimiter => ,' } },
         ].each do |example|
           it "#{example[:input]} raises #{example[:expected][:error]}" do
             expect { add(example[:input]) }.to raise_error(example[:expected][:error], example[:expected][:message])
@@ -42,6 +42,6 @@ RSpec.describe "def add with" do
             expect { add(example[:input]) }.to raise_error(example[:expected][:error], example[:expected][:message])
           end
         end
-    end
+      end
     end
 end
