@@ -9,12 +9,12 @@ root_exec = docker exec -i $(container)
 bundle_exec = $(root_exec) bundle exec
 
 build:
-	DOCKER_BUILDKIT=1 docker buildx build --progress=plain --no-cache -t $(image):$(tag) .
+	DOCKER_BUILDKIT=1 docker buildx build -t $(image):$(tag) .
 
 up: _require_image
 	docker run -d --name $(container) --volume $(pwd):$(workdir) --rm $(image):$(tag)
 
-down:
+down: _require-container-up
 	@docker stop $(container)
 	@docker rmi $(image):$(tag)
 

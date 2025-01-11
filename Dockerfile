@@ -16,4 +16,4 @@ RUN bundle install
 COPY ./ ./
 
 # main.rb is a never ending process.
-CMD ["ruby", "main.rb"]
+CMD ["ruby", "-e", "while true do sleep 10 end"]

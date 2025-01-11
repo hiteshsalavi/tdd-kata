@@ -1,6 +1,6 @@
 # Tests setup for ruby project
 
-name: Tests setup for ruby project
+name: Tests
 on: [push]
 
 jobs:
