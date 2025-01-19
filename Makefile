@@ -18,6 +18,10 @@ down: _require-container-up
 	@docker stop $(container)
 	@docker rmi $(image):$(tag)
 
+c ?=
+exec: _require-container-up
+	$(root_exec) $(c)
+
 path ?= spec
 t: _require-container-up
 	@$(bundle_exec) rspec $(path)

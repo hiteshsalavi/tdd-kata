@@ -2,7 +2,7 @@
 
 ![tests](https://github.com/hiteshsalavi/tdd-kata/actions/workflows/tests.yml/badge.svg)
 
-This is a solution to the [incubyte TDD Kata assignment](https://blog.incubyte.co/blog/tdd-assessment/).
+This is a solution to the [Incubyte TDD Kata](https://blog.incubyte.co/blog/tdd-assessment/).
 This guide will help you set up and clean up the TDD Kata environment using the Makefile.
 
 ## Prerequisites
@@ -27,6 +27,14 @@ Follow these steps in order to run the container and tests:
     - Build the Docker image with the tag `tdd-kata:latest`.
     - Run the container named `tdd-kata` with the current directory mounted to `/tdd-kata/main` inside the container.
     - This container has a mounted volume with host's cwd. This helps to modify the tests on the fly.
+
+    **Note:**
+    Running a command in container has never been so easy. Use `make exec c="<COMMAND>"`
+    Example:
+    ```bash
+    @hiteshsalavi ➜ /workspaces/tdd-kata (main) $ make exec c="cat LICENSE | grep software"
+    of this software and associated documentation files (the "Software"), to deal
+    ```
 
 2. **Running Tests**
 
