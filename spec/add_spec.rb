@@ -2,16 +2,19 @@
 
 require_relative '../calculator/add'
 
-RSpec.describe "def add with" do
+RSpec.describe Calculator, "#add" do
     context "valid argument" do
         [
             {input: '', expected: 0},
             {input: "//,\n1,2", expected: 3},
             {input: "//,\n1,2,3", expected: 6},
             {input: "//#,\n1#,2#,3", expected: 6},
+            {input: "//.\n1.2.3", expected: 6},
+            {input: "//[\n1[2[3", expected: 6},
+            {input: "//[]\n1[]2[]3", expected: 6},
         ].each do |example|
             it "#{example[:input]} returns #{example[:expected]}" do
-                expect(add(example[:input])).to eq(example[:expected])
+                expect(Calculator.new.add(example[:input])).to eq(example[:expected])
             end
         end
     end
@@ -21,11 +24,11 @@ RSpec.describe "def add with" do
         [
           { input: '1,hi', expected: { error: ArgumentError, message: 'arg should be delimiter separated numbers. eg. //;\n1;2;3' } },
           { input: "//,\n1,2#3", expected: { error: ArgumentError, message: 'all or a few numbers are not separated by delimiter => ,' } },
-          { input: "//#,\n1#,2#,3#,-2", expected: { error: ArgumentError, message: 'negative numbers not allowed -2' } },
+          { input: "//#,\n1#,2#,3#,-2#,-4", expected: { error: ArgumentError, message: 'negative numbers not allowed -2, -4' } },
           { input: "//#,\n-5", expected: { error: ArgumentError, message: 'negative numbers not allowed -5' } },
         ].each do |example|
           it "#{example[:input]} raises #{example[:expected][:error]}" do
-            expect { add(example[:input]) }.to raise_error(example[:expected][:error], example[:expected][:message])
+            expect { Calculator.new.add(example[:input]) }.to raise_error(example[:expected][:error], example[:expected][:message])
           end
         end
       end
@@ -40,7 +43,7 @@ RSpec.describe "def add with" do
           { input: ['1,2'], expected: { error: TypeError, message: /arg should be string/ } },
         ].each do |example|
           it "#{example[:input]} raises #{example[:expected][:error]}" do
-            expect { add(example[:input]) }.to raise_error(example[:expected][:error], example[:expected][:message])
+            expect { Calculator.new.add(example[:input]) }.to raise_error(example[:expected][:error], example[:expected][:message])
           end
         end
       end

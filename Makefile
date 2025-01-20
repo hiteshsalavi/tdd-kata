@@ -20,7 +20,7 @@ down: _require-container-up
 
 c ?=
 exec: _require-container-up
-	$(root_exec) $(c)
+	@$(root_exec) $(c)
 
 path ?= spec
 t: _require-container-up
