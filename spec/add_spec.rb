@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../calculator/add'
+require_relative '../src/add'
 
 RSpec.describe Calculator, "#add" do
     context "valid argument" do
