@@ -1,7 +1,7 @@
 # Building a simple string calculator following TDD
 
 class Calculator
-    def add(input)
+    def run(input)
         # Input is expected to be "//{ DELIMITER }\n{ NUMBER }[{ DELIMITER }{ NUMBER }]..."
         # "//;\n1;2;3" , "//;#\n1;#2;#3" are valid
         # "//#\n1#2,3" is invalid (1#2,3)
@@ -19,8 +19,17 @@ class Calculator
         negatives, positives = numbers.split(/#{Regexp.escape(delimiter)}/).map(&:to_i).partition { |num| num < 0 }
 
         raise ArgumentError, "negative numbers not allowed #{negatives.join(', ')}" unless negatives.empty?
-
+        
+        return self.ops[delimiter].call(positives) unless self.ops[delimiter].nil?
         positives.sum
+    end
+
+    def ops
+        return {'*' => method(:multiply)}
+    end
+
+    def multiply(numbers)
+        numbers.inject(:*)
     end
 
     def _validate(input)

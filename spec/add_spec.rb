@@ -2,7 +2,7 @@
 
 require_relative '../src/add'
 
-RSpec.describe Calculator, "#add" do
+RSpec.describe Calculator, "#run" do
     context "valid argument" do
         [
             {input: '', expected: 0},
@@ -12,9 +12,10 @@ RSpec.describe Calculator, "#add" do
             {input: "//.\n1.2.3", expected: 6},
             {input: "//[\n1[2[3", expected: 6},
             {input: "//[]\n1[]2[]3", expected: 6},
+            {input: "//*\n1*2*3*4", expected: 24},
         ].each do |example|
             it "#{example[:input]} returns #{example[:expected]}" do
-                expect(Calculator.new.add(example[:input])).to eq(example[:expected])
+                expect(Calculator.new.run(example[:input])).to eq(example[:expected])
             end
         end
     end
@@ -28,7 +29,7 @@ RSpec.describe Calculator, "#add" do
           { input: "//#,\n-5", expected: { error: ArgumentError, message: 'negative numbers not allowed -5' } },
         ].each do |example|
           it "#{example[:input]} raises #{example[:expected][:error]}" do
-            expect { Calculator.new.add(example[:input]) }.to raise_error(example[:expected][:error], example[:expected][:message])
+            expect { Calculator.new.run(example[:input]) }.to raise_error(example[:expected][:error], example[:expected][:message])
           end
         end
       end
@@ -43,7 +44,7 @@ RSpec.describe Calculator, "#add" do
           { input: ['1,2'], expected: { error: TypeError, message: /arg should be string/ } },
         ].each do |example|
           it "#{example[:input]} raises #{example[:expected][:error]}" do
-            expect { Calculator.new.add(example[:input]) }.to raise_error(example[:expected][:error], example[:expected][:message])
+            expect { Calculator.new.run(example[:input]) }.to raise_error(example[:expected][:error], example[:expected][:message])
           end
         end
       end
