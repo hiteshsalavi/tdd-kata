@@ -29,10 +29,9 @@ Follow these steps in order to run the container and tests:
     - This container has a mounted volume with host's cwd. This helps to modify the tests on the fly.
 
     **Note:**
-    Running a command in container has never been so easy. Use `make exec c="<COMMAND>"`
-    Example:
+    Running a command in container has never been so easy. Use `make exec`
     ```bash
-    @hiteshsalavi ➜ /workspaces/tdd-kata (main) $ make exec c="cat LICENSE | grep software"
+    /workspaces/tdd-kata ➜ (main) $ make exec c="cat LICENSE | grep software"
     of this software and associated documentation files (the "Software"), to deal
     ```
 

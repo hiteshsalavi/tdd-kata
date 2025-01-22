@@ -14,16 +14,16 @@ build:
 up: _require_image
 	docker run -d --name $(container) --volume $(pwd):$(workdir) --rm $(image):$(tag)
 
-down: _require-container-up
+down: _require_container_up
 	@docker stop $(container)
 	@docker rmi $(image):$(tag)
 
 c ?=
-exec: _require-container-up
+exec: _require_container_up
 	@$(root_exec) $(c)
 
 path ?= spec
-t: _require-container-up
+t: _require_container_up
 	@$(bundle_exec) rspec $(path)
 
 
@@ -35,7 +35,7 @@ t: _require-container-up
 # GREEN='\033[0;32m'
 # YELLOW='\033[0;33m'
 # NC='\033[0m' # No Color
-_require-container-up:
+_require_container_up:
 	@if [ -z "$(shell docker ps -q -f name=$(container))" ]; then \
 		echo "Container\033[0;33m $(container)\033[0m is \033[0;31mnot running\033[0m. Please run \033[0;32m'make up'\033[0m first."; \
 		exit 1; \
