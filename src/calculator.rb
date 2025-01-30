@@ -2,7 +2,7 @@
 
 class Calculator
     def run(input)
-        # Input is expected to be "//{ DELIMITER }\n{ NUMBER }[{ DELIMITER }{ NUMBER }]..."
+        # Input is expected to be "//{ DELIMITER }\n{ NUMBER }[{ DELIMITER }{ NUMBER }]*"
         # "//;\n1;2;3" , "//;#\n1;#2;#3" are valid
         # "//#\n1#2,3" is invalid (1#2,3)
 
@@ -18,24 +18,29 @@ class Calculator
 
         negatives, positives = numbers.split(/#{Regexp.escape(delimiter)}/).map(&:to_i).partition { |num| num < 0 }
 
+        # Operation agnostic rejection for negative numbers.
         raise ArgumentError, "negative numbers not allowed #{negatives.join(', ')}" unless negatives.empty?
         
-        return self.ops[delimiter].call(positives) unless self.ops[delimiter].nil?
+        return self._ops[delimiter].call(positives) unless self._ops[delimiter].nil?
         positives.sum
     end
 
-    def ops
-        return {'*' => method(:multiply)}
+    private
+    def _ops
+        return {'*' => method(:_multiply)}
     end
 
-    def multiply(numbers)
+    private
+    def _multiply(numbers)
         numbers.inject(:*)
     end
 
+    private
     def _validate(input)
         input.match(%r{^//(.+)\n(.*)$})
     end
 
+    private
     def _validate_numbers?(numbers, delimiter)
         # This function validates if numbers is correctly separated by delimiter. input numbers could be "a,b:c"
         numbers.match?(/^(-?\d+)(#{Regexp.escape(delimiter)}-?\d+)*$/)

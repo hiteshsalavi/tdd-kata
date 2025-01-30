@@ -3,21 +3,32 @@
 require_relative '../src/calculator'
 
 RSpec.describe Calculator, "#run" do
-    context "valid argument" do
+    describe "valid argument" do
+      context "sum" do
         [
-            {input: '', expected: 0},
-            {input: "//,\n1,2", expected: 3},
-            {input: "//,\n1,2,3", expected: 6},
-            {input: "//#,\n1#,2#,3", expected: 6},
-            {input: "//.\n1.2.3", expected: 6},
-            {input: "//[\n1[2[3", expected: 6},
-            {input: "//[]\n1[]2[]3", expected: 6},
-            {input: "//*\n1*2*3*4", expected: 24},
+          {input: '', expected: 0},
+          {input: "//,\n1,2", expected: 3},
+          {input: "//,\n1,2,3", expected: 6},
+          {input: "//#,\n1#,2#,3", expected: 6},
+          {input: "//.\n1.2.3", expected: 6},
+          {input: "//[\n1[2[3", expected: 6},
+          {input: "//[]\n1[]2[]3", expected: 6},
         ].each do |example|
             it "#{example[:input]} returns #{example[:expected]}" do
                 expect(Calculator.new.run(example[:input])).to eq(example[:expected])
             end
         end
+      end
+
+      context "multiplication" do
+        [
+          {input: "//*\n1*2*3*4", expected: 24},
+        ].each do |example|
+            it "#{example[:input]} returns #{example[:expected]}" do
+                expect(Calculator.new.run(example[:input])).to eq(example[:expected])
+            end
+        end
+      end
     end
 
     describe "invalid argument" do

@@ -3,10 +3,11 @@
 ![tests](https://github.com/hiteshsalavi/tdd-kata/actions/workflows/tests.yml/badge.svg)
 
 This is a solution to the [Incubyte TDD Kata](https://blog.incubyte.co/blog/tdd-assessment/).
-This guide will help you set up and clean up the TDD Kata environment using the Makefile.
+This guide will help you set up and clean up the TDD Kata environment.
 
 ## Prerequisites
 
+- Make
 - Docker
 - Docker Buildx [Most likely already installed with Docker]
 
